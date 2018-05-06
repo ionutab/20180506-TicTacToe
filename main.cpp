@@ -1,13 +1,12 @@
 #include <iostream>
 using namespace std;
 
-char square[10] = {'o', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
-char game[3][3];
+char game[3][3] = {{'1', '2', '3'}, {'4', '5', '6'}, {'7', '8', '9'}};
 
+void makeMove(int choice, char mark);
 bool checkwin();
-void displayArray(char[] array);
+void displayArray(char array[]);
 void displayGame();
-void initGame();
 
 int main()
 {
@@ -16,19 +15,17 @@ int main()
     char mark;
     bool win = false;
     int choice;
+    int moves = 0;
+
+    cout << "Please enter player names" << endl;
+    cout << "Player 1: ";
+    cin >> player1;
+    cout << "Player 2: ";
+    cin >> player2;
 
     do
     {
-        initGame();
         displayGame();
-        // player = (player % 2) ? 1 : 2;
-        // player = 1;
-
-        cout << "Please enter player names:";
-        cout << "Player 1:";
-        cin >> player1;
-        cout << "Player 2:";
-        cin >> player2;
 
         if (player == 1)
         {
@@ -39,7 +36,9 @@ int main()
             cout << "Player " << player2 << ", enter a number:  ";
         }
 
+        //read choice
         cin >> choice;
+        cout << "Choice " << choice;
 
         if (player == 1)
         {
@@ -50,51 +49,70 @@ int main()
             mark = 'O';
         }
 
-        //read choice
+        makeMove(choice, mark);
         //make move
-
-        cin.ignore();
-        cin.get();
+        moves++;
         win = checkwin();
 
         // if not win update player
+        if (win == false)
+        {
+            if (player == 1)
+            {
+                player = 2;
+            }
+            else
+            {
+                player = 1;
+            }
+        }
 
-    } while (win == false);
+    } while (win == false && moves < 9);
 
     displayGame();
 
     // display winner
-    // if (player == 1)
-    //     cout << "==>\aPlayer " << --player << " win ";
-    // else
-    //     cout << "==>\aGame draw";
-
+    if (win == true)
+    {
+        if (player == 1)
+        {
+            cout << "Player " << player1 << " wins! ";
+        }
+        else
+        {
+            cout << "Player " << player2 << " wins! ";
+        }
+    }
+    else
+    {
+        cout << "Tie game! Play again.";
+    }
+    cout << endl;
     cin.ignore();
     cin.get();
     return 0;
 }
 
-bool checkwin()
+void makeMove(int choice, char mark)
 {
-    return true;
+    int i = choice / 3;
+    int j = choice % 3 - 1;
+
+    game[i][j] = mark;
 }
 
-void initGame()
+bool checkwin()
+{
+    bool win = false;
+
+    return bool;
+}
+
+void displayArray(char a[3])
 {
     for (int i = 0; i < 3; i++)
     {
-        for (int j = 0; j < 3; j++)
-        {
-            game[i][j] = ' ';
-        }
-    }
-}
-
-void displayArray(char[] array)
-{
-    for (int i = 0; i < array.length; i++)
-    {
-        cout << array[i] << " ";
+        cout << a[i] << " ";
     }
 }
 
@@ -104,12 +122,13 @@ void displayGame()
 
     cout << "\n\n\tTic Tac Toe\n\n";
 
-    cout << "Player 1 (X)  -  Player 2 (O)" << endl
-         << endl;
+    cout << "Player 1 (X)  -  Player 2 (O)" << endl;
     cout << endl;
 
-    for (int i = 0; i < game.length; i++)
+    for (int i = 0; i < 3; i++)
     {
         displayArray(game[i]);
+        cout << endl;
     }
+    cout << endl;
 }
