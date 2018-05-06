@@ -4,7 +4,11 @@ using namespace std;
 char game[3][3] = {{'1', '2', '3'}, {'4', '5', '6'}, {'7', '8', '9'}};
 
 void makeMove(int choice, char mark);
-bool checkwin();
+bool checkwinRow(int row, char mark);
+bool checkwinCol(int col, char mark);
+bool checkwinDiag1(char mark);
+bool checkwinDiag2(char mark);
+bool checkwin(char mark);
 void displayArray(char array[]);
 void displayGame();
 
@@ -52,7 +56,7 @@ int main()
         makeMove(choice, mark);
         //make move
         moves++;
-        win = checkwin();
+        win = checkwin(mark);
 
         // if not win update player
         if (win == false)
@@ -101,11 +105,79 @@ void makeMove(int choice, char mark)
     game[i][j] = mark;
 }
 
-bool checkwin()
+bool checkwinRow(int row, char mark)
+{
+    for (int i = 0; i < 3; i++)
+    {
+        if (game[row][i] != mark)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+bool checkwinCol(int col, char mark)
+{
+    for (int i = 0; i < 3; i++)
+    {
+        if (game[i][col] != mark)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+bool checkwinDiag1(char mark)
+{
+    for (int i = 0; i < 3; i++)
+    {
+        if (game[i][i] != mark)
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+bool checkwinDiag2(char mark)
+{
+    for (int i = 0; i < 3; i++)
+    {
+        if (game[i][3 - 1 - i] != mark)
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+bool checkwin(char mark)
 {
     bool win = false;
 
-    return bool;
+    for (int i = 0; i < 3; i++)
+    {
+        if (win == false)
+        {
+            win = checkwinRow(i, mark);
+        }
+        if (win == false)
+        {
+            win = checkwinCol(i, mark);
+        }
+    }
+
+    if (win == false)
+    {
+        win = checkwinDiag1(mark);
+    }
+    if (win == false)
+    {
+        win = checkwinDiag2(mark);
+    }
+
+    return win;
 }
 
 void displayArray(char a[3])
