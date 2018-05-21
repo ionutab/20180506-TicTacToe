@@ -1,0 +1,9 @@
+{
+	"C_Cpp.intelliSenseEngine": "Tag Parser",
+	"C_Cpp.errorSquiggles": "Enabled",
+	"files.associations": {
+		"*.gsp": "jsp",
+		"ostream": "cpp",
+		"istream": "cpp"
+	}
+}
